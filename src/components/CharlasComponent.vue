@@ -54,6 +54,11 @@
             :aria-labelledby="`heading-${ronda.idRonda}`" data-bs-parent="#accordionRondas">
             <div class="accordion-body">
               <div class="row g-3">
+                <div class="alert alert-secondary d-flex justify-content-between align-items-center mb-0" style="background-color: #f8f8f8;">
+                  <span><i class="bi bi-clock-history"></i> <strong>Tiempo de la ronda:</strong> {{ ronda.duracion }} minutos</span>
+                  <span><i class="bi bi-check-circle"></i> <strong>Tiempo de charlas aceptadas:</strong> {{ totalTiempoCharlas(ronda.idRonda) }} minutos</span>
+                </div>
+
                 <!-- Cards de charlas dentro de cada ronda -->
                 <div class="col-md-4 mb-4" v-for="charla in charlasPorRonda(ronda.idRonda)" :key="charla.idCharla">
                   <div class="card">
@@ -106,6 +111,7 @@
             <p><strong>Usuario:</strong> {{ charlaSeleccionada.usuario }}</p>
             <p><strong>Curso:</strong> {{ charlaSeleccionada.nombreCurso }}</p>
             <p><strong>Estado:</strong> {{ charlaSeleccionada.estadoCharla }}</p>
+            <p><strong>Duración:</strong> {{ charlaSeleccionada.tiempo }} minutos</p>
             <!-- Botones para cambiar entre Descripción, Comentarios y Recursos -->
             <div class="d-flex custom-buttons-container">
               <button class="custom-button"
@@ -402,6 +408,11 @@ export default {
       return this.charlasFiltradas.filter(
         (charla) => charla.idRonda === idRonda
       );
+    },
+    totalTiempoCharlas(idRonda) {
+      return this.charlasPorRonda(idRonda)
+        .filter(charla => charla.estadoCharla === "ACEPTADA") // Filtrar solo aceptadas
+        .reduce((total, charla) => total + charla.tiempo, 0); // Sumar los tiempos
     },
     //Para una página de detalles
     mostrarDetalles(idCharla) {
