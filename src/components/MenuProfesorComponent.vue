@@ -30,18 +30,6 @@
             {{ item.name }}
           </router-link>
         </li>
-        <li v-if="sinCurso == false">
-                <button
-                  class="nav-link"
-                  @click="
-                    verAlumnos()
-                  "
-                >
-                  <i class="fa-solid fa-user"></i>
-                  Alumnos
-                </button>        
-        </li>
-
       </ul>
 
       <div class="profile-container justify-content-center">
@@ -75,11 +63,11 @@
           </li>
 
           <!-- Ítems móviles -->
-  <li v-for="(item, index) in dropdownNavItems" :key="'mobile-' + index">
-    <a class="dropdown-item pill-link" :href="item.link">
-      <i :class="item.icon"></i> {{ item.name }}
-    </a>
-  </li>
+          <li v-for="(item, index) in dropdownNavItems" :key="'mobile-' + index">
+            <a class="dropdown-item pill-link" :href="item.link">
+              <i :class="item.icon"></i> {{ item.name }}
+            </a>
+          </li>
 
           <li><a class="dropdown-item pill-link" href="/perfilprofesor"><i class="fas fa-user"></i> Mi Perfil</a></li>
 
@@ -111,6 +99,7 @@ export default {
       navItems: [
         { name: "Home", link: "/", icon: "fa-solid fa-house" },
         { name: "Charlas", link: "/charlas", icon: "fa-solid fa-comments" },
+        { name: "Alumnos", link: `/perfilprofesor/alumnos?idCurso=${this.idCurso}&activo=true`, icon: "fa-solid fa-users" },
       ], // Elementos del menú
       alumnos: [],
       curso: { activo: false },
