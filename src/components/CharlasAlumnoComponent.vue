@@ -352,69 +352,6 @@ export default {
       }
     },
 
-    agregarRecurso() {
-  Swal.fire({
-    title: "Agregar Recurso",
-    html: `
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-        <input id="swal-nombre" class="swal2-input" placeholder="Nombre del Recurso" style="width: 90%;">
-        <textarea id="swal-descripcion" class="swal2-textarea" placeholder="Descripción" style="width: 90%; height: 120px;"></textarea>
-        <input id="swal-url" class="swal2-input" placeholder="URL del Recurso" style="width: 90%;">
-      </div>
-    `,
-    showCancelButton: true,
-    confirmButtonText: "Agregar",
-    cancelButtonText: "Cancelar",
-    preConfirm: () => {
-      // Validación de los campos
-      const nombre = document.getElementById("swal-nombre").value.trim();
-      const descripcion = document.getElementById("swal-descripcion").value.trim();
-      const url = document.getElementById("swal-url").value.trim();
-
-      if (!nombre || !descripcion || !url) {
-        Swal.fire({
-          icon: "error",
-          title: "Campos incompletos",
-          text: "Rellena todos los campos antes de agregar el recurso."
-        });
-        return false; // Evita enviar datos incompletos
-      }
-
-      // Validación de la URL
-      const urlPattern = /^https?:\/\/.+$/;
-      if (!urlPattern.test(url)) {
-        Swal.fire({
-          icon: "error",
-          title: "URL inválida",
-          text: "Ingresa una URL válida que comience con \"https://\" o \"http://\"."
-        });
-        return false; // Evita enviar URL no válida
-      }
-
-      // Si pasa validaciones, retorna los datos para agregarlos
-      return {
-        nombre,
-        descripcion,
-        url
-      };
-    },
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // Si la validación es exitosa, agrega el recurso
-      this.recursos.push(result.value);
-
-      // Limpiar formulario
-      this.formRecurso = { nombre: "", descripcion: "", url: "" };
-
-      Swal.fire({
-        icon: "success",
-        title: "Recurso agregado",
-        text: "El recurso se ha agregado correctamente."
-      });
-    }
-  });
-},
-
 editarCharla(charla) {
   Swal.fire({
     title: "Editar Charla",
